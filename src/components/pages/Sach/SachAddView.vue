@@ -32,6 +32,7 @@
                     type="text"
                     class="form-control"
                     :class="{ 'is-invalid': errors.name }"
+                    v-model="sachStore._dataitem.name"
                   />
                   <div class="invalid-feedback">{{ errors.name }}</div>
                 </div>
@@ -42,15 +43,27 @@
                     type="text"
                     class="form-control"
                     :class="{ 'is-invalid': errors.author }"
+                    v-model="sachStore._dataitem.author"
                   />
                   <div class="invalid-feedback">{{ errors.author }}</div>
                 </div>
                 <div class="form-group">
                   <label>Loại sách</label>
-                  <Field name="loaiSachId" as="select" class="form-control"
-                  :class="{ 'is-invalid': errors.loaiSachId }">
-                  <option v-for="ls in loaiSachStore._list" 
-                  :key="ls.id" :value="ls.id" :selected="true" >{{ ls.name }}</option>
+                  <Field
+                    name="loaiSachId"
+                    as="select"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors.loaiSachId }"
+                    v-model="sachStore._dataitem.loaiSachId"
+                  >
+                    <option
+                      v-for="ls in loaiSachStore._list"
+                      :key="ls.id"
+                      :value="ls.id"
+                      :selected="true"
+                    >
+                      {{ ls.name }}
+                    </option>
                   </Field>
                   <div class="invalid-feedback">{{ errors.loaiSachId }}</div>
                 </div>
@@ -61,15 +74,27 @@
                     type="text"
                     class="form-control"
                     :class="{ 'is-invalid': errors.namXB }"
+                    v-model="sachStore._dataitem.namXB"
                   />
                   <div class="invalid-feedback">{{ errors.namXB }}</div>
                 </div>
                 <div class="form-group">
                   <label>Nhà xuất bản</label>
-                  <Field name="nhaXuanBanId" as="select" class="form-control"
-                  :class="{ 'is-invalid': errors.nhaXuanBanId }">
-                  <option v-for="bk in nhaxuatbanStore._list" 
-                  :key="bk.id" :value="bk.id" :selected="true" >{{ bk.name }}</option>
+                  <Field
+                    name="nhaXuanBanId"
+                    as="select"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors.nhaXuanBanId }"
+                    v-model="sachStore._dataitem.nhaXuanBanId"
+                  >
+                    <option
+                      v-for="bk in nhaxuatbanStore._list"
+                      :key="bk.id"
+                      :value="bk.id"
+                      :selected="true"
+                    >
+                      {{ bk.name }}
+                    </option>
                   </Field>
                   <div class="invalid-feedback">{{ errors.nhaXuanBanId }}</div>
                 </div>
@@ -80,6 +105,7 @@
                     type="text"
                     class="form-control"
                     :class="{ 'is-invalid': errors.soLuong }"
+                    v-model="sachStore._dataitem.soLuong"
                   />
                   <div class="invalid-feedback">{{ errors.soLuong }}</div>
                 </div>
@@ -90,20 +116,22 @@
                     type="text"
                     class="form-control"
                     :class="{ 'is-invalid': errors.giaSach }"
+                    v-model="sachStore._dataitem.giaSach"
                   />
                   <div class="invalid-feedback">{{ errors.giaSach }}</div>
                 </div>
                 <div class="form-group">
                   <label>Ảnh bìa sách</label>
                   <Field
-                    name="anhBia"
+                    name="file"
                     accept="image/*"
                     class="form-control"
                     type="file"
                     @change="previewfiles($event)"
-                    :class="{ 'is-invalid': errors.anhBia }"
+                    :class="{ 'is-invalid': errors.file }"
+                    v-model="sachStore._file"
                   />
-                  <div class="invalid-feedback">{{ errors.anhBia }}</div>
+                  <div class="invalid-feedback">{{ errors.file }}</div>
                 </div>
               </div>
               <div class="card-footer text-right">
@@ -132,14 +160,18 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { Form, Field } from "vee-validate";
 import * as Yup from "yup";
 import { useloaiSachStore } from "../../../store/LoaiSach";
 import { usenhaxuatbanStore } from "../../../store/NhaXuatBan";
+import { toast } from "vue3-toastify";
+import { cst } from "../../../utils/common/constcommon";
+import { usesachStore } from "../../../store/Sach";
 
 const loaiSachStore = useloaiSachStore();
 const nhaxuatbanStore = usenhaxuatbanStore();
+const sachStore = usesachStore();
 
 onMounted(async () => {
   await loaiSachStore.getloaisachselect();
@@ -162,13 +194,14 @@ const schema = Yup.object().shape({
     .typeError("Phải nhập lại số!")
     .integer("Phải nhập số nguyên!"),
   giaSach: Yup.number().typeError("Phải nhập lại số!"),
-  anhBia: Yup.string().required("Bắt buộc nhập ảnh bìa!"),
+  file: Yup.mixed().required("Bắt buộc nhập file ảnh!"),
 });
 
 const _newImage = ref<any>();
 
 const previewfiles = (event: any) => {
   const file = event.target.files[0];
+  sachStore._dataitem.anhBia = file.name;
   const theReader = new FileReader();
   theReader.onloadend = async () => {
     _newImage.value = await theReader.result;
@@ -176,11 +209,19 @@ const previewfiles = (event: any) => {
   theReader.readAsDataURL(file);
 };
 
-const onSubmit = () => {};
+const onSubmit = async () => {
+  await sachStore.addsach(sachStore._dataitem, sachStore._file as any);
+  if (sachStore._successfully) {
+    toast.success(cst.addsuccess);
+  }
+  if (sachStore._error) {
+    toast.error(loaiSachStore._errormessage);
+  }
+};
 </script>
 <style scoped>
 .book-img {
   width: 100%;
-  height: auto;
+  height: 100vh;
 }
 </style>

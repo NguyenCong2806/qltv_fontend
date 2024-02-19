@@ -33,4 +33,12 @@ export const cst = {
   adddocgia: "docgia/adddocgia",
   editdocgia: "docgia/editdocgia",
   deldocgia: "docgia/deldocgia/",
+
+  //sach
+  getsach: "sach/getsach",
+  getsachbyid:"sach/getbysach/",
+  uploadfile:"sach/uploadfile",
+  addsach: "sach/addsach",
+  editsach: "sach/editsach",
+  delsach : "sach/delsach/",
 };
