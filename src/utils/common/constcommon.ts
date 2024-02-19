@@ -10,18 +10,27 @@ export const cst = {
   iconsuccess: "success",
   pagenumber: 1,
   totalnumber: 5,
-
+  dangkysuccess: "Đăng ký thành công!",
   //loai sach
   getallloaisach: "loaisach/getloaisach",
+  getloaisachselect: "loaisach/getloaisachselect",
   getloaisachbyid: "loaisach/getbyloaisach/",
   addloaisach: "loaisach/addloaisach",
   editloaisach: "loaisach/editloaisach",
   delloaisach: "loaisach/delloaisach/",
 
-  /// nha xuat bam//
+  /// nha xuat ban//
   getallnhaxuatban: "nhaxuatban/getallnhaxuatban",
   getnhaxuatbanbyid: "nhaxuatban/getbynhaxuatban/",
+  getnhaxuatbanselect: "nhaxuatban/getnhaxuatbanselect",
   addnhaxuatban: "nhaxuatban/addnhaxuatban",
   editnhaxuatban: "nhaxuatban/editnhaxuatban",
   delnhaxuatban: "nhaxuatban/delnhaxuatban/",
+
+  //doc gia
+  getdocgia: "docgia/getdocgia",
+  getdocgiabyid: "docgia/getbydocgia/",
+  adddocgia: "docgia/adddocgia",
+  editdocgia: "docgia/editdocgia",
+  deldocgia: "docgia/deldocgia/",
 };

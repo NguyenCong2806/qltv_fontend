@@ -5,11 +5,14 @@ import { cst } from "../../utils/common/constcommon";
 import Service from "../Service";
 import Inhaxuatbanservice from "./INhaXuatBanService";
 
-
 class nhaxuatbanService
   extends Service<nhaxuatbanvm, number>
   implements Inhaxuatbanservice
 {
+  async getnhaxuatbanselect(): Promise<nhaxuatbanvm[]> {
+    const res = await super.getallsselect(cst.getnhaxuatbanselect);
+    return res;
+  }
   async getnhaxuatbanbyid(id: number): Promise<nhaxuatbanvm> {
     const res = await super.getbyid(cst.getnhaxuatbanbyid, id);
     return res;

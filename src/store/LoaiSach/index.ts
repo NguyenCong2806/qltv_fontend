@@ -9,6 +9,7 @@ export const useloaiSachStore = defineStore("loaisachid", {
     _datalist: new resultreturn<loaisachvm>(),
     _isloading: false,
     _dataitem: new loaisachvm(),
+    _list: new Array<loaisachvm>,
     _successfully: false,
     _error: false,
     _errormessage: "",
@@ -28,6 +29,15 @@ export const useloaiSachStore = defineStore("loaisachid", {
       try {
         const res = await loaisachService.addloaisach(data);
         this._successfully = res;
+      } catch (error: any) {
+        this._error = true;
+        this._errormessage = error.message;
+      }
+    },
+    async getloaisachselect() {
+      try {
+        const res = await loaisachService.getloaisachselect();
+        this._list = res;
       } catch (error: any) {
         this._error = true;
         this._errormessage = error.message;

@@ -9,6 +9,10 @@ class loaiSachService
   extends Service<loaisachvm, number>
   implements IloaisachServie
 {
+  async getloaisachselect(): Promise<loaisachvm[]> {
+    const res = await super.getallsselect(cst.getloaisachselect);
+    return res;
+  }
   async getloaisachbyid(id: number): Promise<loaisachvm> {
     const res = await super.getbyid(cst.getloaisachbyid, id);
     return res;

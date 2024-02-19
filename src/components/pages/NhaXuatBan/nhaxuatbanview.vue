@@ -102,6 +102,7 @@ import { cst } from "../../../utils/common/constcommon";
 import swal from "sweetalert";
 import SelectTotalPage from "../../article/SelectTotalPage.vue";
 import ModalnxbView from "../../pages/NhaXuatBan/ModalnxbView.vue";
+import nhaxuatbanvm from "../../../model/nhaxuatban/nhaxuatbanvm";
 
 const nhaxuatbanStore = usenhaxuatbanStore();
 

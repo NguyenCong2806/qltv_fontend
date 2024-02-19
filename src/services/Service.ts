@@ -6,6 +6,14 @@ import axios from "axios";
 var api_url: string = import.meta.env.VITE_API_URL;
 
 export default abstract class Service<M, T> implements IService<M, T> {
+  async getallsselect(url: string): Promise<M[]> {
+    try {
+      const res = await axios.get<Array<M>>(api_url + url);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
   async getalls(
     url: string,
     model: searchParameters
