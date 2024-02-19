@@ -8,4 +8,6 @@ export default interface IService<M, T> {
   add(url:string,data: M): Promise<Boolean>;
   edit(url:string,data: M): Promise<Boolean>;
   delete(url:string,data: T): Promise<Boolean>;
+
+  uploadfile(url:string,file:File):Promise<boolean>;
 }
