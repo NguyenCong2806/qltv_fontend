@@ -16,6 +16,11 @@ const routes = [
             name: 'loaisach',
             component: () => import(/* webpackChunkName: "about" */ '../components/pages/LoaiSach/LoaiSachView.vue'),
         },
+        {
+          path: '/nhaxuatban',
+          name: 'nhaxuatban',
+          component: () => import(/* webpackChunkName: "about" */ '../components/pages/NhaXuatBan/nhaxuatbanview.vue'),
+      },
     ]
 
   },
