@@ -58,6 +58,14 @@ const routes = [
           ),
       },
       {
+        path: "/chitietsach/:id",
+        name: "chitietsach",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../components/pages/Sach/SachEditView.vue"
+          ),
+      },
+      {
         path: "/phieutra",
         name: "phieutra",
         component: () =>

@@ -10,4 +10,6 @@ export default interface IService<M, T> {
   delete(url:string,data: T): Promise<Boolean>;
 
   uploadfile(url:string,file:File):Promise<boolean>;
+  editfile(url:string,file:File,filename:string):Promise<boolean>;
+  deletefile(url:string,filename:string):Promise<boolean>;
 }

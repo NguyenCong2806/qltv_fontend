@@ -155,7 +155,9 @@
               alt="anhsach"
               :src="
                 _newImage ||
-                'https://www.namepros.com/attachments/empty-png.89209/'
+                (sachStore._dataitem.anhBia != null
+                  ? fomat_url(sachStore._dataitem.anhBia)
+                  : 'https://www.namepros.com/attachments/empty-png.89209/')
               "
             />
           </div>
@@ -173,14 +175,24 @@ import { usenhaxuatbanStore } from "../../../store/NhaXuatBan";
 import { toast } from "vue3-toastify";
 import { cst } from "../../../utils/common/constcommon";
 import { usesachStore } from "../../../store/Sach";
+import { useRoute } from "vue-router";
 
 const loaiSachStore = useloaiSachStore();
 const nhaxuatbanStore = usenhaxuatbanStore();
 const sachStore = usesachStore();
+const route = useRoute();
+const filenameold = ref<string>("");
+const _ischangefile = ref<boolean>(false);
+
+var url_file: string = import.meta.env.VITE_API_FILE;
+const fomat_url = (img: string) => {
+  return url_file + img;
+};
 
 onMounted(async () => {
   await loaiSachStore.getloaisachselect();
   await nhaxuatbanStore.getnhaxuatbanselect();
+  sachStore.getsachbyid(route.params.id as string);
 });
 
 const schema = Yup.object().shape({
@@ -202,9 +214,11 @@ const schema = Yup.object().shape({
   file: Yup.mixed().required("Bắt buộc nhập file ảnh!"),
 });
 
-const _newImage = ref<any>();
+const _newImage = ref<any>("");
 
 const previewfiles = (event: any) => {
+  _ischangefile.value = true;
+  filenameold.value = sachStore._dataitem.anhBia;
   const file = event.target.files[0];
   sachStore._dataitem.anhBia = file.name;
   const theReader = new FileReader();
@@ -215,13 +229,14 @@ const previewfiles = (event: any) => {
 };
 
 const onSubmit = async () => {
-  await sachStore.addsach(sachStore._dataitem, sachStore._file as any);
-  if (sachStore._successfully) {
-    toast.success(cst.addsuccess);
-  }
-  if (sachStore._error) {
-    toast.error(loaiSachStore._errormessage);
-  }
+    await sachStore.editsach(sachStore._dataitem, 
+    sachStore._file as any,_ischangefile.value,filenameold.value);
+    if (sachStore._successfully) {
+      toast.success(cst.updatesuccess);
+    }
+    if (sachStore._error) {
+      toast.error(loaiSachStore._errormessage);
+    }
 };
 </script>
 <style scoped>

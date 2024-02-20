@@ -38,6 +38,8 @@ export const cst = {
   getsach: "sach/getsach",
   getsachbyid:"sach/getbysach/",
   uploadfile:"sach/uploadfile",
+  editfile:"sach/editfile",
+  deletefile: "sach/delete/",
   addsach: "sach/addsach",
   editsach: "sach/editsach",
   delsach : "sach/delsach/",
