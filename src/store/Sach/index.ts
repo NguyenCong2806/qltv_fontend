@@ -36,6 +36,9 @@ export const usesachStore = defineStore("sachid", {
     getdefaultsach() {
       this._dataitem = new sachvm();
     },
+    getdefaultsachs() {
+      this._arryitem=new Array<sachvm>();
+    },
     //add loai sach ///
     async addsach(data: sachvm, file: File) {
       try {
