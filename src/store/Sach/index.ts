@@ -58,10 +58,16 @@ export const usesachStore = defineStore("sachid", {
         this._errormessage = error.message;
       }
     },
-    async delsach(id: string) {
+    async delsach(id: string, filename: string) {
       try {
+        //Xoa sach //
         const res = await SachService.delsach(id);
-        this._successfully = res;
+        let _deletecheck = false;
+        //Xoa file old //
+        if (res) {
+          _deletecheck = await fileService.deletedfile(filename);
+        }
+        this._successfully = res && _deletecheck;
       } catch (error: any) {
         this._error = true;
         this._errormessage = error.message;

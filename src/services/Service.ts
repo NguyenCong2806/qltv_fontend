@@ -6,6 +6,14 @@ import axios from "axios";
 var api_url: string = import.meta.env.VITE_API_URL;
 
 export default abstract class Service<M, T> implements IService<M, T> {
+  async deletefile(url: string, filename: string): Promise<boolean> {
+    try {
+      const res = await axios.delete(api_url + url + filename);
+      return res.data as boolean;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
   async uploadfile(url: string, file: File): Promise<boolean> {
     try {
       let formData = new FormData();

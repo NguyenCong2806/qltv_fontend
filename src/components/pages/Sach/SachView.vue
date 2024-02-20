@@ -27,16 +27,16 @@
       </div>
       <div class="row">
         <div
-          class="col-12 col-sm-6 col-md-3 col-lg-2"
+          class="col-12 col-sm-6 col-md-4 col-lg-2"
           v-for="item in sachStore._datalist.results"
           :key="item.id"
         >
           <div class="card">
             <div class="card-img">
-              <img class="box_img" :src="fomat_url(item.anhBia)"  alt="anh" />
+              <img class="box_img" :src="fomat_url(item.anhBia)" alt="anh" />
             </div>
             <div class="card-body">
-              <h5 class="card-title">{{ item.name }}</h5>
+              <h6 class="card-title">{{ item.name }}</h6>
               <div class="card-text">
                 <p>
                   Tác giả: <span>{{ item.author }}</span>
@@ -45,16 +45,17 @@
                   Thể loại: <span>{{ item.loaiSach.name }}</span>
                 </p>
                 <p>
-                  Nhà xuất bản: <span>{{ item.nhaXuatBan.name }}</span>
+                  Nhà xuất bản:
+                  <span class="text-size">{{ item.nhaXuatBan.name }}</span>
                 </p>
               </div>
               <div class="d-flex flex-row justify-content-between">
                 <a href="#" class="btn btn-primary">
                   <span class="ion-information-circled"> Chi tiết</span>
                 </a>
-                <a href="#" class="btn btn-danger">
+                <button @click="delsach(item.id,item.anhBia)" class="btn btn-danger">
                   <span class="ion-close-round"> Xóa</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -79,12 +80,15 @@ import Pagination from "../../article/Pagination.vue";
 import Loading from "../../article/Loading.vue";
 import { usesachStore } from "../../../store/Sach";
 import { cst } from "../../../utils/common/constcommon";
+import swal from "sweetalert";
+import { toast } from "vue3-toastify";
 
 var model = new searchParameters();
 const sachStore = usesachStore();
 
 onMounted(async () => {
   await loading(model);
+  sachStore.getdefaultsach();
 });
 const changtotalpage = async (totalpage: number) => {
   model.totalnumber = totalpage;
@@ -102,20 +106,47 @@ const nextpage = async (index: number) => {
 const loading = async (data: searchParameters) => {
   await sachStore.getallsachs(data);
 };
+
+const delsach = async (id: string, filename: string) => {
+  const _isdelete = (await swal({
+    title: cst.deletemessage as string,
+    text: cst.warningmessage,
+    icon: cst.iconwarning,
+    buttons: ["Hủy bỏ", "Xóa bỏ"],
+    dangerMode: true,
+  })) as boolean;
+  if (_isdelete) {
+    await sachStore.delsach(id, filename);
+    if (sachStore._successfully) {
+      swal(cst.deletesuccess, {
+        icon: cst.iconsuccess,
+      });
+    }
+    if (sachStore._error) {
+      toast.error(sachStore._errormessage);
+    }
+  }
+  await loading(model);
+};
+
 var url_file: string = import.meta.env.VITE_API_FILE;
 const fomat_url = (img: string) => {
   return url_file + img;
 };
 </script>
 <style scoped>
-.card-img{
+.card-img {
   width: 100%;
   height: auto;
   overflow: hidden;
 }
-.box_img{
+.box_img {
   width: 100%;
   height: 250px;
   object-fit: contain;
+}
+.text-size {
+  font-size: 12px;
+  color: green;
 }
 </style>
