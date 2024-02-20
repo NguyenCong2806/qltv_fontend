@@ -58,13 +58,18 @@
       <h6>Thông tin chi tiết</h6>
     </div>
     <div class="card-body">
-      <div class="alert alert-secondary" v-if="_model.name!=null">
+      <div class="alert alert-secondary" v-if="_arrylist"
+        v-for="item in _arrylist" :key="item.id"
+        >
         <div class="alert-body">
-          <button class="close text-danger" data-dismiss="alert">
+          <button class="close text-danger" data-dismiss="alert" 
+          @click="deleteitem(item.id)">
             <span>×</span>
           </button>
-          Sách:&nbsp;<span class="text-info text-size">{{ _model.name }}</span>&nbsp;&nbsp;
-          Số lượng:&nbsp;<span class="text-info text-size">1</span>
+          Sách:&nbsp;<span class="text-info text-size">{{ item.name ||"No book" }}</span
+          >&nbsp;&nbsp; Số lượng:&nbsp;<span class="text-info text-size"
+            >1</span
+          >
         </div>
       </div>
     </div>
@@ -77,7 +82,7 @@ import { ref } from "vue";
 
 const _searchkey = ref<string>("");
 const sachStore = usesachStore();
-const _model = ref<sachvm>(new sachvm());
+let _arrylist = ref<Array<sachvm>>(new Array<sachvm>());
 
 var url_file: string = import.meta.env.VITE_API_FILE;
 const fomat_url = (img: string) => {
@@ -88,12 +93,16 @@ const searchchang = async () => {
   if (_searchkey.value.length > 1) {
     await sachStore.getsearchsachs(_searchkey.value);
   } else {
-    //sachStore.getdefaultdocgias();
+    sachStore.getdefaultsachs();
   }
 };
 const selectdocgia = (model: sachvm) => {
-  _model.value = model;
+    _arrylist.value.push(model);
 };
+const deleteitem =(id: string)=>{
+  const _index = _arrylist.value.findIndex(x=>x.id==id);
+   _arrylist.value.splice(_index, 1);
+}
 </script>
 <style scoped lang="scss">
 .wrapper {
@@ -109,7 +118,7 @@ const selectdocgia = (model: sachvm) => {
     margin: 0px;
   }
 }
-.text-size{
+.text-size {
   font-size: 16px;
   font-weight: bold;
 }
