@@ -3,6 +3,10 @@ import Service from "../Service";
 import IfileService from "./IfileService";
 
 class fileService extends Service<File, string> implements IfileService {
+  async editingfile(file: File, filename: string): Promise<boolean> {
+    const res = await super.editfile(cst.editfile,file,filename);
+    return res;
+  }
   async deletedfile(filename: string): Promise<boolean> {
     const res = await super.deletefile(cst.deletefile, filename);
     return res;

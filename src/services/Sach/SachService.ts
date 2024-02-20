@@ -1,6 +1,5 @@
 import resultreturn from "../../model/Resultreturn";
 import searchParameters from "../../model/SearchParameter";
-import sachinfovm from "../../model/sach/sachinfovm";
 import sachvm from "../../model/sach/sachvm";
 import { cst } from "../../utils/common/constcommon";
 import Service from "../Service";
@@ -9,8 +8,9 @@ import Isachservice from "./ISachService";
 
 class sachService extends Service<sachvm, string> implements Isachservice {
  
-  editsach(data: sachvm): Promise<boolean> {
-    throw new Error("Method not implemented.");
+ async editsach(data: sachvm): Promise<boolean> {
+    const res = await super.edit(cst.editsach, data);
+    return res;
   }
   
   async delsach(id: string): Promise<boolean> {

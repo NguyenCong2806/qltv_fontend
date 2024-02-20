@@ -50,9 +50,10 @@
                 </p>
               </div>
               <div class="d-flex flex-row justify-content-between">
-                <a href="#" class="btn btn-primary">
+                <RouterLink :to="{ name: 'chitietsach', params: { id: item.id }}" 
+                class="btn btn-primary">
                   <span class="ion-information-circled"> Chi tiết</span>
-                </a>
+                </RouterLink>
                 <button @click="delsach(item.id,item.anhBia)" class="btn btn-danger">
                   <span class="ion-close-round"> Xóa</span>
                 </button>
