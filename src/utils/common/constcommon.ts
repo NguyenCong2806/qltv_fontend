@@ -29,6 +29,7 @@ export const cst = {
 
   //doc gia
   getdocgia: "docgia/getdocgia",
+  getdocgiasearch: "docgia/getsearch/",
   getdocgiabyid: "docgia/getbydocgia/",
   adddocgia: "docgia/adddocgia",
   editdocgia: "docgia/editdocgia",
@@ -36,11 +37,12 @@ export const cst = {
 
   //sach
   getsach: "sach/getsach",
-  getsachbyid:"sach/getbysach/",
-  uploadfile:"sach/uploadfile",
-  editfile:"sach/editfile",
+  getsachbyid: "sach/getbysach/",
+  getsachsearch: "sach/getsearch/",
+  uploadfile: "sach/uploadfile",
+  editfile: "sach/editfile",
   deletefile: "sach/delete/",
   addsach: "sach/addsach",
   editsach: "sach/editsach",
-  delsach : "sach/delsach/",
+  delsach: "sach/delsach/",
 };

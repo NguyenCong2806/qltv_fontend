@@ -7,6 +7,10 @@ import Isachservice from "./ISachService";
 
 
 class sachService extends Service<sachvm, string> implements Isachservice {
+  async getsachsearch(name: string): Promise<sachvm[]> {
+    const res = await super.getallsearch(cst.getsachsearch, name);
+    return res;
+  }
  
  async editsach(data: sachvm): Promise<boolean> {
     const res = await super.edit(cst.editsach, data);

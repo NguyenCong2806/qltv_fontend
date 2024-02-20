@@ -106,6 +106,14 @@ const routes = [
       ),
   },
   {
+    path: "/taophieumuon",
+    name: "taophieumuon",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../components/pages/PhieuMuon/PhieuMuonAdd.vue"
+      ),
+  },
+  {
     path: "/:catchAll(.*)*",
     component: () =>
       import(

@@ -6,6 +6,14 @@ import axios from "axios";
 var api_url: string = import.meta.env.VITE_API_URL;
 
 export default abstract class Service<M, T> implements IService<M, T> {
+  async getallsearch(url: string, filed: string): Promise<M[]> {
+    try {
+      const res = await axios.get<Array<M>>(api_url + url + filed);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
   async editfile(url: string, file: File, filename: string): Promise<boolean> {
     try {
       let formData = new FormData();

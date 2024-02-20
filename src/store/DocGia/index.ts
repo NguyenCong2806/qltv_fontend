@@ -8,7 +8,9 @@ export const usedocgiaStore = defineStore("docgiaid", {
   state: () => ({
     _datalist: new resultreturn<docgiavm>(),
     _isloading: false,
+    _arryitem: new Array<docgiavm>,
     _dataitem: new docgiavm(),
+    _item: new docgiavm(),
     _successfully: false,
     _error: false,
     _errormessage: "",
@@ -22,10 +24,25 @@ export const usedocgiaStore = defineStore("docgiaid", {
     getdefaultdocgia(){
       this._dataitem= new docgiavm();
     },
+    getdocgia(item: docgiavm){
+      this._dataitem= item;
+    },
+    getdefaultdocgias(){
+      this._arryitem = new Array<docgiavm>;
+    },
     async adddocgia(data: docgiavm) {
       try {
         const res = await docgiaService.adddocgia(data);
         this._successfully = res;
+      } catch (error: any) {
+        this._error = true;
+        this._errormessage = error.message;
+      }
+    },
+    async getsearchdocgias(name: string) {
+      try {
+        const res = await docgiaService.getdocgiasearch(name);
+        this._arryitem = res;
       } catch (error: any) {
         this._error = true;
         this._errormessage = error.message;

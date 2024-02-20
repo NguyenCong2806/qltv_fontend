@@ -4,6 +4,7 @@ import docgiavm from "../../model/docgia/docgiavm";
 
 export default interface IdocgiaServie {
   getalldocgias(model: SearchParameter): Promise<resultreturn<docgiavm>>;
+  getdocgiasearch(name:string):Promise<Array<docgiavm>>;
   getdocgiabyid(id: string):Promise<docgiavm>;
   adddocgia(data: docgiavm):Promise<boolean>;
   editdocgia(data: docgiavm):Promise<boolean>;

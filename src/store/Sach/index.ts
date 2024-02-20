@@ -12,6 +12,7 @@ export const usesachStore = defineStore("sachid", {
     _dataitem: new sachvm(),
     _file: File,
     _successfully: false,
+    _arryitem: new Array<sachvm>(),
     _list: new Array<sachvm>(),
     _error: false,
     _errormessage: "",
@@ -58,6 +59,15 @@ export const usesachStore = defineStore("sachid", {
            }
         }
         this._successfully = res;
+      } catch (error: any) {
+        this._error = true;
+        this._errormessage = error.message;
+      }
+    },
+    async getsearchsachs(name: string) {
+      try {
+        const res = await SachService.getsachsearch(name);
+        this._arryitem = res;
       } catch (error: any) {
         this._error = true;
         this._errormessage = error.message;
