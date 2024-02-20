@@ -22,11 +22,11 @@
                 <img
                   :src="fomat_url(sach.anhBia)"
                   alt="Generic placeholder image"
-                  @click="selectdocgia(sach)"
+                  @click="selectsach(sach)"
                 />
               </div>
               <div class="media-bodys">
-                <h5 class="mt-0 mb-1" @click="selectdocgia(sach)">
+                <h5 class="mt-0 mb-1" @click="selectsach(sach)">
                   {{ sach.name }}
                 </h5>
                 <div>
@@ -53,27 +53,7 @@
       </div>
     </div>
   </div>
-  <div class="card mt-3">
-    <div class="card-header">
-      <h6>Thông tin chi tiết</h6>
-    </div>
-    <div class="card-body">
-      <div class="alert alert-secondary" v-if="_arrylist"
-        v-for="item in _arrylist" :key="item.id"
-        >
-        <div class="alert-body">
-          <button class="close text-danger" data-dismiss="alert" 
-          @click="deleteitem(item.id)">
-            <span>×</span>
-          </button>
-          Sách:&nbsp;<span class="text-info text-size">{{ item.name ||"No book" }}</span
-          >&nbsp;&nbsp; Số lượng:&nbsp;<span class="text-info text-size"
-            >1</span
-          >
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </template>
 <script setup lang="ts">
 import sachvm from "../../../model/sach/sachvm";
@@ -82,12 +62,15 @@ import { ref } from "vue";
 
 const _searchkey = ref<string>("");
 const sachStore = usesachStore();
-let _arrylist = ref<Array<sachvm>>(new Array<sachvm>());
+
 
 var url_file: string = import.meta.env.VITE_API_FILE;
 const fomat_url = (img: string) => {
   return url_file + img;
 };
+const emit = defineEmits<{
+  (e: 'selectsach', model: sachvm): void
+}>();
 
 const searchchang = async () => {
   if (_searchkey.value.length > 1) {
@@ -96,13 +79,10 @@ const searchchang = async () => {
     sachStore.getdefaultsachs();
   }
 };
-const selectdocgia = (model: sachvm) => {
-    _arrylist.value.push(model);
+const selectsach = (model: sachvm) => {
+  emit('selectsach',model);
 };
-const deleteitem =(id: string)=>{
-  const _index = _arrylist.value.findIndex(x=>x.id==id);
-   _arrylist.value.splice(_index, 1);
-}
+
 </script>
 <style scoped lang="scss">
 .wrapper {

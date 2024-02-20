@@ -26,12 +26,11 @@
         <searchform @search="searchdata"></searchform>
       </div>
       <div class="row">
-        <div
-          class="col-12 col-sm-6 col-md-4 col-lg-2"
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3"
           v-for="item in sachStore._datalist.results"
           :key="item.id"
         >
-          <div class="card">
+          <div class="card shadow-lg p-3 mb-5 bg-body rounded">
             <div class="card-img">
               <img class="box_img" :src="fomat_url(item.anhBia)" alt="anh" />
             </div>

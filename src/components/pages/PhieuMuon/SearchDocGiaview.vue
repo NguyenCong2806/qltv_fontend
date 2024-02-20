@@ -26,66 +26,7 @@
       </ul>
     </div>
   </div>
-  <div class="card mt-3">
-    <div class="card-header">
-      <h6>Thông tin chi tiết</h6>
-    </div>
-    <div class="card-body">
-      <div class="form-group">
-        <label>Mã phiếu mượn</label>
-        <input type="text" class="form-control" v-model="_model.id" readonly />
-      </div>
-      <div class="form-group">
-        <label>Mã độc giả</label>
-        <input type="text" class="form-control" v-model="_model.id" readonly />
-      </div>
-      <div class="form-group">
-        <label>Họ và tên</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.name"
-          readonly
-        />
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.email"
-          readonly
-        />
-      </div>
-      <div class="form-group">
-        <label>Địa chỉ</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.diaChi"
-          readonly
-        />
-      </div>
-      <div class="form-group">
-        <label>Ngày sinh</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.ngaySinh"
-          readonly
-        />
-      </div>
-      <div class="form-group">
-        <label>Hạn sử dụng thẻ</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.hanSuDung"
-          readonly
-        />
-      </div>
-    </div>
-  </div>
+  
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
@@ -93,7 +34,10 @@ import { usedocgiaStore } from "../../../store/DocGia";
 import docgiavm from "../../../model/docgia/docgiavm";
 const docgiaStore = usedocgiaStore();
 const _searchkey = ref<string>("");
-const _model = ref<docgiavm>(new docgiavm());
+
+  const emit = defineEmits<{
+  (e: 'selectdocgia', model: docgiavm): void
+}>();
 
 const searchchang = async () => {
   if (_searchkey.value.length > 1) {
@@ -103,7 +47,7 @@ const searchchang = async () => {
   }
 };
 const selectdocgia = (model: docgiavm) => {
-  _model.value = model;
+   emit('selectdocgia',model);
   _searchkey.value = "";
   docgiaStore.getdefaultdocgias();
 };
