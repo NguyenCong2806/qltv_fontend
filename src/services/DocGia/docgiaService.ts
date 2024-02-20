@@ -10,6 +10,10 @@ class docgiaService
   extends Service<docgiavm, string>
   implements IdocgiaService
 {
+  async getdocgiasearch(name: string): Promise<docgiavm[]> {
+    const res = await super.getallsearch(cst.getdocgiasearch, name);
+    return res;
+  }
   async getdocgiabyid(id: string): Promise<docgiavm> {
     const res = await super.getbyid(cst.getdocgiabyid, id);
     return res;

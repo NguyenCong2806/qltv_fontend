@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-    </section>
+</section>
 </template>
 <script setup lang="ts">
   const imglogin:string = "/img/stisla-fill.svg";

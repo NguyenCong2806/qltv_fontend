@@ -5,6 +5,7 @@ import sachvm from "../../model/sach/sachvm";
 export default interface Isachservice {
   getallsachs(model: SearchParameter): Promise<resultreturn<sachvm>>;
   getsachselect(): Promise<Array<sachvm>>;
+  getsachsearch(name:string):Promise<Array<sachvm>>;
   getsachbyid(id: string):Promise<sachvm>;
   addsach(data: sachvm):Promise<boolean>;
   editsach(data: sachvm):Promise<boolean>;
