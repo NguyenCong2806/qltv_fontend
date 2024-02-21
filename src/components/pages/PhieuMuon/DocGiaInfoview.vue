@@ -32,15 +32,6 @@
         />
       </div>
       <div class="form-group">
-        <label>Ngày sinh</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="_model.ngaySinh"
-          readonly
-        />
-      </div>
-      <div class="form-group">
         <label>Hạn sử dụng thẻ</label>
         <input
           type="text"
@@ -58,5 +49,6 @@ import docgiavm from "../../../model/docgia/docgiavm";
 defineProps<{
     _model: docgiavm;
 }>();
+
 </script>
 <style scoped lang="scss"></style>
