@@ -1,9 +1,12 @@
 <template>
   <section class="section">
     <div class="section-header">
-      <h1>Danh sách phiếu mượn</h1>
+      <h1>Danh sách sách mượn</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active">
+          <router-link to="/phieumuon">danh sách sách mượn</router-link>
+        </div>
+        <div class="breadcrumb-item">
           <router-link to="/phieumuon">phiếu mượn</router-link>
         </div>
         <div class="breadcrumb-item">
@@ -26,17 +29,14 @@
                       <th class="p-0 text-center">
                         <input type="checkbox" />
                       </th>
-                      <th>Mã phiếu mượn</th>
-                      <th>Tên độc giả</th>
-                      <th>Email độc giả</th>
-                      <th>Địa chỉ độc giả</th>
-                      <th>Ngày mượn</th>
+                      <th>Tên sách</th>
+                      <th>Ngày trả</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in phieuMuonStore._datalist.results"
+                      v-for="item in chitietphieumuonStore._list"
                       :key="item.id"
                     >
                       <td class="p-0 text-center">
@@ -44,19 +44,13 @@
                           <input type="checkbox" />
                         </div>
                       </td>
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.docGia.name }}</td>
-                      <td>{{ item.docGia.email }}</td>
-                      <td>{{ item.docGia.diaChi }}</td>
-                      <td>{{ item.ngayMuon}}</td>
+                      <td>{{ item.sach.name }}</td>
+                      <td>{{ item.ngayTra }}</td>
                       <td>
-                        <RouterLink :to="{ name: 'chitietphieumuon', params: { id:item.id }}"
-                          class="btn btn-icon btn-primary"
+                        <button v-if="chitietphieumuonStore._list.length>1"
+                          class="btn btn-icon btn-danger"
+                          @click="del(item.id)"
                         >
-                          <i class="far fa-edit"></i>
-                        </RouterLink>
-                        &nbsp;
-                        <button class="btn btn-icon btn-danger" @click="del(item.id)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>
@@ -73,45 +67,41 @@
 </template>
 <script setup lang="ts">
 import { onMounted } from "vue";
-import searchParameters from "../../../model/SearchParameter";
-import { usephieumuonStore } from "../../../store/PhieuMuon";
-import { cst } from "../../../utils/common/constcommon";
-import swal from "sweetalert";
 import { usechitietphieumuonStore } from "../../../store/ChiTietPhieuMuon";
+import { useRoute } from "vue-router";
+import swal from "sweetalert";
 import { toast } from "vue3-toastify";
+import { cst } from "../../../utils/common/constcommon";
 
-const phieuMuonStore = usephieumuonStore();
 const chitietphieumuonStore = usechitietphieumuonStore();
-var model = new searchParameters();
-
-onMounted(async () => {
-  await loading(model);
-});
-const loading = async (data: searchParameters) => {
-  await phieuMuonStore.getallphieumuons(data);
+const route = useRoute();
+const loading = async () => {
+  await chitietphieumuonStore.getsachphieumuonbyid(route.params.id as string);
 };
+onMounted(async () => {
+  await loading();
+});
 
 const del = async (id: string) => {
-    const _isdelete = (await swal({
-      title: cst.deletemessage as string,
-      text: cst.warningmessage,
-      icon: cst.iconwarning,
-      buttons: ["Hủy bỏ", "Xóa bỏ"],
-      dangerMode: true,
-    })) as boolean;
-    if (_isdelete) {
-      await phieuMuonStore.delphieumuon(id);
-      if (phieuMuonStore._successfully) {
-        await chitietphieumuonStore.delchitietphieumuon(id);
-        swal(cst.deletesuccess, {
-          icon: cst.iconsuccess,
-        });
-      }
-      if (phieuMuonStore._error) {
-        toast.error(phieuMuonStore._errormessage);
-      }
+  const _isdelete = (await swal({
+    title: cst.deletemessage as string,
+    text: cst.warningmessage,
+    icon: cst.iconwarning,
+    buttons: ["Hủy bỏ", "Xóa bỏ"],
+    dangerMode: true,
+  })) as boolean;
+  if (_isdelete) {
+    await chitietphieumuonStore.delonechitietphieumuon(id);
+    if (chitietphieumuonStore._successfully) {
+      swal(cst.deletesuccess, {
+        icon: cst.iconsuccess,
+      });
     }
-    await loading(model);
-  };
+    if (chitietphieumuonStore._error) {
+      toast.error(chitietphieumuonStore._errormessage);
+    }
+  }
+  await loading();
+};
 </script>
 <style scoped></style>

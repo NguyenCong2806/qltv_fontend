@@ -82,6 +82,14 @@ const routes = [
           ),
       },
       {
+        path: "/chitietphieumuon/:id",
+        name: "chitietphieumuon",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../components/pages/PhieuMuon/DSSachMuonView.vue"
+          ),
+      },
+      {
         path: "/taikhoan",
         name: "taikhoan",
         component: () =>

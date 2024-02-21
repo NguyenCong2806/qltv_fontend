@@ -7,6 +7,7 @@ export default interface IService<M, T> {
   getbyid(url:string,id: T): Promise<M>;
 
   add(url:string,data: M): Promise<Boolean>;
+  addList(url:string,data: Array<M>): Promise<Boolean>;
   edit(url:string,data: M): Promise<Boolean>;
   delete(url:string,data: T): Promise<Boolean>;
 

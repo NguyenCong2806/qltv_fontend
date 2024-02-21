@@ -6,6 +6,14 @@ import axios from "axios";
 var api_url: string = import.meta.env.VITE_API_URL;
 
 export default abstract class Service<M, T> implements IService<M, T> {
+  async addList(url: string, data: M[]): Promise<boolean> {
+    try {
+      const res = await axios.post(api_url + url, data);
+      return res.data as boolean;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
   async getallsearch(url: string, filed: string): Promise<M[]> {
     try {
       const res = await axios.get<Array<M>>(api_url + url + filed);

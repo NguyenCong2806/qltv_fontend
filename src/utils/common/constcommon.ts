@@ -6,11 +6,14 @@ export const cst = {
   defaultid: 0,
   deletemessage: "Bạn chắc chắn muốn xóa bỏ!",
   warningmessage: "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!",
+  warningmessagephieumuon: "Bạn chưa nhập độc giả!",
+  warningmessagephieumuonsach: "Bạn chưa nhập sách mượn!",
   iconwarning: "warning",
   iconsuccess: "success",
   pagenumber: 1,
   totalnumber: 5,
   dangkysuccess: "Đăng ký thành công!",
+  phiuemuonsuccess: "Đăng ký thành công phiếu mượn!",
   //loai sach
   getallloaisach: "loaisach/getloaisach",
   getloaisachselect: "loaisach/getloaisachselect",
@@ -45,4 +48,13 @@ export const cst = {
   addsach: "sach/addsach",
   editsach: "sach/editsach",
   delsach: "sach/delsach/",
+
+  addPhieuMuon:"phieumuon/addPhieuMuon",
+  getPhieuMuon:"phieumuon/getPhieuMuon",
+  delPhieuMuon:"phieumuon/delPhieuMuon/",
+
+  addchitietphieumuon:"chitietphieumuon/addchitietphieumuon",
+  delchitietphieumuon:"chitietphieumuon/delchitietphieumuon/",
+  delechitietphieumuon:"chitietphieumuon/delechitietphieumuon/",
+  getbyallsachphieumuon: "chitietphieumuon/getbyallsach/"
 };
