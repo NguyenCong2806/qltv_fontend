@@ -17,7 +17,6 @@ export const useuserStore = defineStore("userid", {
   actions: {
     async getallusers(model: searchParameters) {
       const res = await userService.getallusers(model);
-      console.log(res);
       this._isloading = res.status;
       this._datalist = res as resultreturn<uservm>;
     },
