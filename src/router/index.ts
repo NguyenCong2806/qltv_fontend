@@ -86,7 +86,7 @@ const routes = [
         name: "chitietphieumuon",
         component: () =>
           import(
-            /* webpackChunkName: "about" */ "../components/pages/PhieuMuon/DSSachMuonView.vue"
+            /* webpackChunkName: "about" */ "../components/pages/ChiTietPhieuMuon/DSSachMuonView.vue"
           ),
       },
       {
@@ -95,6 +95,22 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "about" */ "../components/pages/TaiKhoan/index.vue"
+          ),
+      },
+      {
+        path: "/taotaikhoan",
+        name: "taotaikhoan",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../components/pages/TaiKhoan/UserAddView.vue"
+          ),
+      },
+      {
+        path: "/suataikhoan/:id",
+        name: "suataikhoan",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../components/pages/TaiKhoan/UserEditView.vue"
           ),
       },
     ],
