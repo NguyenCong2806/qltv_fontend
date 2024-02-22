@@ -2,6 +2,7 @@ import SearchParameter from "../model/SearchParameter";
 import resultreturn from "../model/Resultreturn";
 export default interface IService<M, T> {
   getalls(url:string, model: SearchParameter): Promise<resultreturn<M>>;
+
   getallsselect(url:string): Promise<Array<M>>;
   getallsearch(url:string,filed:string): Promise<Array<M>>;
   getbyid(url:string,id: T): Promise<M>;
@@ -14,4 +15,6 @@ export default interface IService<M, T> {
   uploadfile(url:string,file:File):Promise<boolean>;
   editfile(url:string,file:File,filename:string):Promise<boolean>;
   deletefile(url:string,filename:string):Promise<boolean>;
+
+  getnumber(url:string): Promise<M>;
 }

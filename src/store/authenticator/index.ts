@@ -14,7 +14,6 @@ export const useauthorStore = defineStore("authorid", {
     async login(data: userlogin) {
       try {
         const res = await authenticator.login(data);
-        console.log(res);
         if (res.status) {
           sessionStorageapp.setsessionStorage(res);
           this._successfully = true;

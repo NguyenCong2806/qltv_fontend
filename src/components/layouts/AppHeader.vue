@@ -181,24 +181,38 @@
             src="assets/img/avatar/avatar-1.png"
             class="rounded-circle mr-1"
           /> -->
-          <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a
+          <div class="d-sm-none d-lg-inline-block">Hi, {{ sessionStorageapp.getusername() }}</div></a
         >
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-title">Đang online</div>
-          <a href="features-profile.html" class="dropdown-item has-icon">
+          <RouterLink :to="{ name: 'suataikhoan', params: { id: sessionStorageapp.getuserid() }}" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Hồ sơ
-          </a>
+          </RouterLink>
           <a href="features-activities.html" class="dropdown-item has-icon">
             <i class="fas fa-bolt"></i> Đổi mật khẩu
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item has-icon text-danger">
-            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-          </a>
+          <button @click="logout" class="dropdown-item has-icon text-danger">
+            Đăng xuất
+          </button>
         </div>
       </li>
     </ul>
   </nav>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { sessionStorageapp } from '../../Authenticator/configsessionStorage';
+import { useauthorStore } from '../../store/authenticator';
+import { useRouter } from "vue-router";
+
+const userStore = useauthorStore();
+const router = useRouter();
+
+const logout = ()=>{
+   userStore.logout();
+  if (userStore._successfully) {
+    router.push('/login');
+  }
+}
+</script>
 <style scoped></style>

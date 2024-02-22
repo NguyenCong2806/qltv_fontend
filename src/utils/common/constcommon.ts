@@ -75,6 +75,7 @@ export const cst = {
   settokes: "tokens",
   setuserid: "setuserid",
   setusername:"setusername",
-  setroles:"setroles"
+  setroles:"setroles",
   
+  main:"main/getmain"
 };
