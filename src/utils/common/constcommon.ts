@@ -14,6 +14,7 @@ export const cst = {
   totalnumber: 5,
   dangkysuccess: "Đăng ký thành công!",
   phiuemuonsuccess: "Đăng ký thành công phiếu mượn!",
+  trasuccess: "Bạn đã trả sách thành công!",
   //loai sach
   getallloaisach: "loaisach/getloaisach",
   getloaisachselect: "loaisach/getloaisachselect",
@@ -56,5 +57,24 @@ export const cst = {
   addchitietphieumuon:"chitietphieumuon/addchitietphieumuon",
   delchitietphieumuon:"chitietphieumuon/delchitietphieumuon/",
   delechitietphieumuon:"chitietphieumuon/delechitietphieumuon/",
-  getbyallsachphieumuon: "chitietphieumuon/getbyallsach/"
+  getbyallsachphieumuon: "chitietphieumuon/getbyallsach/",
+
+  addPhieuTra:"phieutra/addPhieuTra",
+  getPhieuTra:"phieutra/getPhieuTra",
+  delPhieuTra:"phieutra/delPhieuTra/",
+
+  getalluser: "user/getuser",
+  getuserbyid: "user/getbyuser/",
+  adduser: "user/adduser",
+  edituser: "user/edituser",
+  deluser: "user/deluser/",
+
+  login:"user/login",
+
+
+  settokes: "tokens",
+  setuserid: "setuserid",
+  setusername:"setusername",
+  setroles:"setroles"
+  
 };

@@ -56,6 +56,10 @@
                           <i class="far fa-edit"></i>
                         </RouterLink>
                         &nbsp;
+                        <button class="btn btn-icon btn-info" @click="tra(item.id)">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        &nbsp;
                         <button class="btn btn-icon btn-danger" @click="del(item.id)">
                           <i class="fas fa-times"></i>
                         </button>
@@ -79,9 +83,14 @@ import { cst } from "../../../utils/common/constcommon";
 import swal from "sweetalert";
 import { usechitietphieumuonStore } from "../../../store/ChiTietPhieuMuon";
 import { toast } from "vue3-toastify";
+import { usephieutraStore } from "../../../store/phieutra";
+import phieutravm from "../../../model/phieutra/phieutravm";
+import { Guid } from "guid-typescript";
 
 const phieuMuonStore = usephieumuonStore();
 const chitietphieumuonStore = usechitietphieumuonStore();
+const phieutraStore = usephieutraStore();
+
 var model = new searchParameters();
 
 onMounted(async () => {
@@ -90,7 +99,16 @@ onMounted(async () => {
 const loading = async (data: searchParameters) => {
   await phieuMuonStore.getallphieumuons(data);
 };
-
+const tra = async(id: string)=>{
+  const _data = new phieutravm();
+  _data.id = Guid.createEmpty().toString();
+  _data.phieuMuonId = id;
+  _data.ngayTra = new Date();
+   await phieutraStore.addphieutra(_data);
+   if(phieutraStore._successfully){
+    toast.success( cst.trasuccess);
+   }
+};
 const del = async (id: string) => {
     const _isdelete = (await swal({
       title: cst.deletemessage as string,
