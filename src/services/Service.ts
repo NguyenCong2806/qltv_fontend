@@ -5,14 +5,21 @@ import IService from "./IService";
 import axios from "axios";
 
 var api_url: string = import.meta.env.VITE_API_URL;
-const config = {
-  headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` }
-};
 export default abstract class Service<M, T> implements IService<M, T> {
+  async getnumber(url: string): Promise<M> {
+    try {
+      const res = await axios.get<M>(api_url + url, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
+      });
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
   async addList(url: string, data: M[]): Promise<boolean> {
     try {
-      const res = await axios.post(api_url + url, data,{
-        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.post(api_url + url, data, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data as boolean;
     } catch (error: any) {
@@ -21,8 +28,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async getallsearch(url: string, filed: string): Promise<M[]> {
     try {
-      const res = await axios.get<Array<M>>(api_url + url + filed,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.get<Array<M>>(api_url + url + filed, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data;
     } catch (error: any) {
@@ -37,7 +44,7 @@ export default abstract class Service<M, T> implements IService<M, T> {
       const res = await axios.put(api_url + url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          'Authorization': `Bearer ${sessionStorageapp.gettokes()}`
+          Authorization: `Bearer ${sessionStorageapp.gettokes()}`,
         },
       });
       return res.data;
@@ -47,8 +54,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async deletefile(url: string, filename: string): Promise<boolean> {
     try {
-      const res = await axios.delete(api_url + url + filename,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.delete(api_url + url + filename, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data as boolean;
     } catch (error: any) {
@@ -62,7 +69,7 @@ export default abstract class Service<M, T> implements IService<M, T> {
       const res = await axios.post(api_url + url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          'Authorization': `Bearer ${sessionStorageapp.gettokes()}`
+          Authorization: `Bearer ${sessionStorageapp.gettokes()}`,
         },
       });
       return res.data;
@@ -72,8 +79,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async getallsselect(url: string): Promise<M[]> {
     try {
-      const res = await axios.get<Array<M>>(api_url + url,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.get<Array<M>>(api_url + url, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data;
     } catch (error: any) {
@@ -91,7 +98,7 @@ export default abstract class Service<M, T> implements IService<M, T> {
           totalnumber: model.totalnumber,
           keywork: model.keywork,
         },
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data;
     } catch (error: any) {
@@ -100,8 +107,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async getbyid(url: string, id: T): Promise<M> {
     try {
-      const res = await axios.get<M>(api_url + url + id,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.get<M>(api_url + url + id, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data;
     } catch (error: any) {
@@ -110,8 +117,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async add(url: string, data: M): Promise<boolean> {
     try {
-      const res = await axios.post(api_url + url, data,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.post(api_url + url, data, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data as boolean;
     } catch (error: any) {
@@ -120,8 +127,9 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async edit(url: string, data: M): Promise<boolean> {
     try {
-      const res = await axios.put(api_url + url, data,
-        {headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }});
+      const res = await axios.put(api_url + url, data, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
+      });
       return res.data as boolean;
     } catch (error: any) {
       throw new Error(error.message);
@@ -129,8 +137,8 @@ export default abstract class Service<M, T> implements IService<M, T> {
   }
   async delete(url: string, data: T): Promise<boolean> {
     try {
-      const res = await axios.delete(api_url + url + data,{
-        headers: { 'Authorization': `Bearer ${sessionStorageapp.gettokes()}` }
+      const res = await axios.delete(api_url + url + data, {
+        headers: { Authorization: `Bearer ${sessionStorageapp.gettokes()}` },
       });
       return res.data as boolean;
     } catch (error: any) {

@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { sessionStorageapp } from "../Authenticator/configsessionStorage";
 
 const routes = [
   {
     path: "/",
     name: "main",
+    meta: {
+      requiresauth: true
+    },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../components/layouts/AppMain.vue"
@@ -124,6 +128,9 @@ const routes = [
   {
     path: "/dangkydocgia",
     name: "dangkydocgia",
+    meta: {
+      requiresauth: true
+    },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../components/pages/DocGia/DocGiaDangKyView.vue"
@@ -132,6 +139,9 @@ const routes = [
   {
     path: "/taophieumuon",
     name: "taophieumuon",
+    meta: {
+      requiresauth: true
+    },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../components/pages/PhieuMuon/PhieuMuonAdd.vue"
@@ -149,4 +159,17 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+router.beforeEach(function (to, from, next) {
+
+  const _isauth = sessionStorageapp.getuserid();
+  if ((to.meta.requiresauth && to.path !== '/login') && (_isauth==null)) {
+    
+    next({ path: '/login' })
+  } else if ((to.path === '/login' || to.path === 'login')&& (_isauth!=null)) {
+    next({ path: '/' })
+  } else {
+    next()
+  }
+})
+
 export default router;
